@@ -1,3 +1,6 @@
+/**
+ * Component for signing messages with Web3 wallet integration and animated UI feedback
+ */
 "use client";
 import { Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -6,13 +9,16 @@ import { useAccount, useSignMessage } from "wagmi";
 import { SignMessageErrorType } from "wagmi/actions";
 import { SignMessageData } from "wagmi/query";
 
+// Message to be signed by the user
 const signatureMessage = "Hello Quantinium";
 
+// Types for message state management
 type MessageType = {
   text: string;
   state: "success" | "error" | "pending";
 };
 
+// Color mapping for different message states
 const messageStateColors: Record<MessageType["state"], string> = {
   error: "text-red-500",
   success: "text-green-500",
@@ -20,6 +26,7 @@ const messageStateColors: Record<MessageType["state"], string> = {
 };
 
 export default function SignMessage() {
+  // State management for messages and loading
   const [message, setMessage] = useState<MessageType>({
     text: "",
     state: "pending",
@@ -27,6 +34,7 @@ export default function SignMessage() {
   const [loading, setLoading] = useState(false);
   const { isConnected } = useAccount();
 
+  // Hook for handling message signing with wagmi
   const { signMessage, isPending } = useSignMessage({
     mutation: {
       onSuccess(data: SignMessageData) {
@@ -50,10 +58,12 @@ export default function SignMessage() {
     },
   });
 
+  // Reset message when wallet connection changes
   useEffect(() => {
     if (isConnected) setMessage({ text: "", state: "pending" });
   }, [isConnected]);
 
+  // Handle signature request
   const handleSign = async () => {
     if (!isConnected) {
       setMessage({
@@ -87,18 +97,21 @@ export default function SignMessage() {
       <motion.p layout className="text-center my-2">
         &quot;{signatureMessage}&quot;
       </motion.p>
-      <motion.button
-        layout
+      {/* Sign button with loading state */}
+      {/* We could abstract this into a separate component but since it's only used once in this project, it's not worth it.
+      (not a good practice to over abstract components now as plans in the future may change) */}
+      <button
         onClick={handleSign}
         className="w-fit my-2 font-bold relative bg-foreground text-background px-4 py-2 rounded-xl 
-        disabled:opacity-70 enabled:hover:scale-105 enabled:hover:bg-primary/90 enabled:cursor-pointer transition-all flex items-center justify-center"
+       disabled:opacity-70 enabled:hover:scale-105 enabled:hover:bg-primary/90 enabled:cursor-pointer transition-all flex items-center justify-center"
         disabled={loading || isPending}
       >
         <span className={loading || isPending ? "invisible" : ""}>Sign</span>
         {(loading || isPending) && (
           <Loader2 className="h-6 w-6 animate-spin absolute" />
         )}
-      </motion.button>
+      </button>
+      {/* Animated message display */}
       <AnimatePresence mode="wait">
         <motion.p
           layout

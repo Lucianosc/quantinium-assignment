@@ -1,3 +1,6 @@
+/**
+ * Navigation bar component with wallet connection button and animations
+ */
 "use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { motion } from "framer-motion";
