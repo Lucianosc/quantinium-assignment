@@ -1,4 +1,4 @@
-# Quantinium assignment
+# Quantinium Assignment
 
 Built with Next.js "create-next-app", featuring wallet integration, message signing, and animated UI components.
 
@@ -22,6 +22,7 @@ pnpm install
 ```bash
 # Using yarn with turborepo to run the project locally
 yarn dev
+```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -29,13 +30,13 @@ yarn dev
 
 ```
 ├── app/
-│ ├── layout.tsx
-│ └── page.tsx
+│   ├── layout.tsx
+│   └── page.tsx
 ├── components/
-│ ├── SignMessage.tsx  # Message signing component
-│ └── NavBar.tsx # Navigation with wallet connection
-├── Providers/
-│ └── Providers.tsx # Web3 providers setup
+│   ├── SignMessage.tsx  # Message signing component
+│   └── NavBar.tsx      # Navigation with wallet connection
+├── providers/
+│   └── Providers.tsx   # Web3 providers setup
 └── ...
 ```
 
@@ -51,4 +52,3 @@ yarn dev
   - Framer Motion
 - **Package Management**:
   - Yarn (default)
-
